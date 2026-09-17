@@ -1,0 +1,341 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #000;
+  color: #fff;
+
+  font-family: "Courier New", monospace;
+
+  cursor: none;
+}
+
+.horror {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: radial-gradient(circle at center, #080808 0%, #020202 45%, #000 100%);
+}
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+.text-container {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text {
+  position: relative;
+
+  font-family: "Courier New", monospace;
+
+  font-size: clamp(3rem, 9vw, 9rem);
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  text-align: center;
+
+  color: #f2f2f2;
+
+  user-select: none;
+
+  text-shadow:
+    2px 0 #ff003c,
+    -2px 0 #00ffff;
+
+  animation:
+    text-flicker 0.08s infinite,
+    text-shake 0.12s infinite;
+
+  will-change: transform, filter;
+}
+
+/* =========================================================
+   GLITCH LAYERS
+   ========================================================= */
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  overflow: hidden;
+}
+
+.glitch-text::before {
+  color: #ff003c;
+
+  transform: translate(-4px, 0);
+
+  clip-path: inset(10% 0 65% 0);
+
+  animation: glitch-red 0.12s infinite steps(2);
+}
+
+.glitch-text::after {
+  color: #00ffff;
+
+  transform: translate(4px, 0);
+
+  clip-path: inset(60% 0 10% 0);
+
+  animation: glitch-blue 0.09s infinite steps(2);
+}
+
+/* =========================================================
+   HARD FLICKER
+   ========================================================= */
+
+@keyframes text-flicker {
+  0% {
+    opacity: 1;
+  }
+
+  15% {
+    opacity: 0.85;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0.35;
+  }
+
+  37% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.75;
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.2;
+  }
+
+  72% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   TEXT MOVEMENT
+   ========================================================= */
+
+@keyframes text-shake {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-2px, 1px);
+  }
+
+  40% {
+    transform: translate(3px, -1px);
+  }
+
+  60% {
+    transform: translate(-1px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* =========================================================
+   RED CHANNEL
+   ========================================================= */
+
+@keyframes glitch-red {
+  0% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(-6px, 0);
+  }
+
+  20% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(7px, -2px);
+  }
+
+  40% {
+    clip-path: inset(75% 0 10% 0);
+    transform: translate(-4px, 1px);
+  }
+
+  60% {
+    clip-path: inset(20% 0 55% 0);
+    transform: translate(5px, 2px);
+  }
+
+  80% {
+    clip-path: inset(55% 0 25% 0);
+    transform: translate(-8px, -1px);
+  }
+
+  100% {
+    clip-path: inset(5% 0 75% 0);
+    transform: translate(4px, 0);
+  }
+}
+
+/* =========================================================
+   BLUE CHANNEL
+   ========================================================= */
+
+@keyframes glitch-blue {
+  0% {
+    clip-path: inset(70% 0 5% 0);
+    transform: translate(7px, 1px);
+  }
+
+  20% {
+    clip-path: inset(15% 0 60% 0);
+    transform: translate(-6px, 0);
+  }
+
+  40% {
+    clip-path: inset(45% 0 30% 0);
+    transform: translate(5px, -2px);
+  }
+
+  60% {
+    clip-path: inset(5% 0 75% 0);
+    transform: translate(-7px, 2px);
+  }
+
+  80% {
+    clip-path: inset(65% 0 15% 0);
+    transform: translate(8px, 0);
+  }
+
+  100% {
+    clip-path: inset(35% 0 45% 0);
+    transform: translate(-4px, -1px);
+  }
+}
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.scanlines {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px);
+
+  opacity: 0.5;
+
+  mix-blend-mode: screen;
+}
+
+/* =========================================================
+   NOISE
+   ========================================================= */
+
+.noise {
+  position: absolute;
+
+  inset: -50%;
+
+  pointer-events: none;
+
+  opacity: 0.08;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.5'/%3E%3C/svg%3E");
+
+  animation: noise-move 0.15s infinite steps(2);
+}
+
+@keyframes noise-move {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(3%, -2%);
+  }
+
+  50% {
+    transform: translate(-2%, 3%);
+  }
+
+  75% {
+    transform: translate(4%, 1%);
+  }
+
+  100% {
+    transform: translate(-3%, -4%);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .glitch-text {
+    font-size: 15vw;
+    letter-spacing: 0.04em;
+  }
+}
